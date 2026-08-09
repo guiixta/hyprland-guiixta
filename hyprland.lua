@@ -66,6 +66,8 @@ local menu        = "hyprlauncher"
 hl.on("hyprland.start", function ()
     hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
     hl.exec_cmd("hyprpaper & waybar & swaync")
+		hl.exec_cmd("/usr/lib/polkit-kde-agent-1")
+		hl.exec_cmd("clipse -listen")
 end)
 
 -------------------------------
@@ -82,7 +84,8 @@ hl.env("KDE_FULL_SESSION", "false")
 hl.env("KDE_SESSION_VERSION", "0")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("GTK_THEME", "Adwaita-dark")
-
+hl.env("BROWSER", "app.zen_browser.zen")
+hl.env("DEFAULT_BROWSER", "app.zen_browser.zen")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 
 -----------------------
@@ -286,7 +289,7 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + SUPER_L", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
@@ -344,7 +347,7 @@ hl.bind(mainMod .. "+ SHIFT + Escape", hl.dsp.exec_cmd("killall waybar"))
 hl.bind(mainMod .. "+ Escape", hl.dsp.exec_cmd("waybar"))
 hl.bind("Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | satty --filename - --output-filename ~/Imagens/Capturas\\ de\\ tela/captura-de-tela-$(date '+%Y%m%d-%H%M%S').png"))
 hl.bind("CONTROL + SHIFT + Escape", hl.dsp.exec_cmd("plasma-systemmonitor"))
-
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("kitty --class Clipse -e clipse"))
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
@@ -400,4 +403,12 @@ hl.window_rule({
     match = { class = "com.gabm.satty" },
 
     float = true,
+})
+
+hl.window_rule({
+	name = "clipse",
+	match = { class = 'Clipse' },
+	float = true,
+	center = true,
+	size = "622 652",
 })

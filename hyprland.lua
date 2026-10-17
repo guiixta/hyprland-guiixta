@@ -75,13 +75,14 @@ end)
 -------------------------------
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-hl.env("XCURSOR_THEME", "breeze_cursors")
-hl.env("XCURSOR_SIZE", "16")
-hl.env("HYPRCURSOR_THEME", "breeze_cursors")
-hl.env("HYPRCURSOR_SIZE", "16")
+hl.env("XCURSOR_THEME", "Oxygen Matrix Green")
+hl.env("XCURSOR_SIZE", "12")
+hl.env("HYPRCURSOR_THEME", "Oxygen Matrix Green")
+hl.env("HYPRCURSOR_SIZE", "12")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-hl.env("KDE_FULL_SESSION", "false")
-hl.env("KDE_SESSION_VERSION", "0")
+hl.env("KDE_FULL_SESSION", "true")
+hl.env("KDE_SESSION_VERSION", "6")
+hl.env("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("GTK_THEME", "Adwaita-dark")
 hl.env("BROWSER", "app.zen_browser.zen")
@@ -319,6 +320,7 @@ end
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + ALT + S", hl.dsp.window.move({ workspace = "+0" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -379,6 +381,15 @@ hl.window_rule({
     },
 
     no_focus = true,
+})
+
+
+-- Application Rules
+hl.window_rule({
+    name  = "emulator-floating",
+    match = { class = "Emulator" },
+    float = true,
+		center = true,
 })
 
 -- Layer rules also return a handle.
